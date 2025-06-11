@@ -29,6 +29,63 @@ We executed real simulations over 30 days for three major stocks:
   - Average loss: -€9.87
   - Final capital: €4,990.13
 
+## 📈 Generated Trading Charts
+
+### AAPL Trading Analysis
+
+#### Conservative Bot Results
+![AAPL Conservative Trading](src/images/trading_simulation_AAPL_conservative.png)
+
+**Analysis**: The conservative bot detected no trading opportunities for AAPL, maintaining capital preservation but missing potential gains.
+
+#### Aggressive Bot Results
+![AAPL Aggressive Trading](src/images/trading_simulation_AAPL_aggressive.png)
+
+**Analysis**: The aggressive bot executed 9 trades with mixed results:
+- **Entry Points**: Multiple buy signals triggered by RSI and MACD
+- **Exit Points**: Stop losses and take profits executed automatically
+- **Performance**: 22.22% success rate with significant volatility
+
+### MSFT Trading Analysis
+
+#### Conservative Bot Results
+![MSFT Conservative Trading](src/images/trading_simulation_MSFT_conservative.png)
+
+**Analysis**: Conservative approach avoided trading due to elevated RSI levels, preserving capital.
+
+#### Aggressive Bot Results
+![MSFT Aggressive Trading](src/images/trading_simulation_MSFT_aggressive.png)
+
+**Analysis**: Single profitable trade executed with 100% success rate:
+- **Entry**: RSI at 64.61, approaching overbought
+- **Exit**: Quick 4% profit capture
+- **Performance**: Excellent risk management
+
+### TSLA Trading Analysis
+
+#### Conservative Bot Results
+![TSLA Conservative Trading](src/images/trading_simulation_TSLA_conservative.png)
+
+**Analysis**: No trades executed due to high volatility and unclear signals.
+
+#### Aggressive Bot Results
+![TSLA Aggressive Trading](src/images/trading_simulation_TSLA_aggressive.png)
+
+**Analysis**: Single trade with stop loss triggered:
+- **Entry**: RSI at 44.68, neutral territory
+- **Exit**: Stop loss at 1.5% triggered
+- **Performance**: Demonstrates risk management effectiveness
+
+### Overall Performance Comparison
+
+![Trading Comparison](src/images/trading_comparison_final.png)
+
+**Key Insights from Charts**:
+- **Conservative Strategy**: Zero risk, zero return
+- **Aggressive Strategy**: Higher activity with mixed results
+- **Risk Management**: Stop losses effectively limit losses
+- **Market Conditions**: Different volatility regimes affect performance
+
 ### 📊 Generated Charts
 
 The simulations produced detailed charts for each stock:
