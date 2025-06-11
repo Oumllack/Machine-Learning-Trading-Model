@@ -1,179 +1,179 @@
-# 🤖 Système de Trading Automatique Avancé
+# 🤖 Advanced Automated Trading System
 
-Un système complet de trading automatique en Python intégrant la récupération de données boursières, l'analyse technique, la prédiction LSTM et des bots de trading intelligents.
+A complete automated trading system in Python integrating stock data retrieval, technical analysis, LSTM prediction, and intelligent trading bots.
 
-## 📊 Résultats des Simulations de Trading Réelles
+## 📊 Real Trading Simulation Results
 
-### 🎯 Comparaison Conservateur vs Agressif
+### 🎯 Conservative vs Aggressive Comparison
 
-Nous avons exécuté des simulations réelles sur 30 jours pour trois actions majeures :
+We executed real simulations over 30 days for three major stocks:
 
 #### 📈 AAPL (Apple Inc.)
-- **Bot Conservateur**: 0.00% (0 trades) - Aucune opportunité détectée
-- **Bot Agressif**: -1.69% (9 trades) - Taux de réussite: 22.22%
-  - Gain moyen: 46.06€
-  - Perte moyenne: -25.24€
-  - Capital final: 4,915.44€
+- **Conservative Bot**: 0.00% (0 trades) - No opportunities detected
+- **Aggressive Bot**: -1.69% (9 trades) - Success rate: 22.22%
+  - Average gain: €46.06
+  - Average loss: -€25.24
+  - Final capital: €4,915.44
 
 #### 💻 MSFT (Microsoft Corporation)
-- **Bot Conservateur**: 0.00% (0 trades) - Aucune opportunité détectée
-- **Bot Agressif**: +0.02% (1 trade) - Taux de réussite: 100%
-  - Gain moyen: 1.22€
-  - Perte moyenne: 0.00€
-  - Capital final: 5,001.22€
+- **Conservative Bot**: 0.00% (0 trades) - No opportunities detected
+- **Aggressive Bot**: +0.02% (1 trade) - Success rate: 100%
+  - Average gain: €1.22
+  - Average loss: €0.00
+  - Final capital: €5,001.22
 
 #### 🚗 TSLA (Tesla Inc.)
-- **Bot Conservateur**: 0.00% (0 trades) - Aucune opportunité détectée
-- **Bot Agressif**: -0.20% (1 trade) - Taux de réussite: 0%
-  - Gain moyen: 0.00€
-  - Perte moyenne: -9.87€
-  - Capital final: 4,990.13€
+- **Conservative Bot**: 0.00% (0 trades) - No opportunities detected
+- **Aggressive Bot**: -0.20% (1 trade) - Success rate: 0%
+  - Average gain: €0.00
+  - Average loss: -€9.87
+  - Final capital: €4,990.13
 
-### 📊 Graphiques Générés
+### 📊 Generated Charts
 
-Les simulations ont produit des graphiques détaillés pour chaque action :
+The simulations produced detailed charts for each stock:
 
-- **Prix et Trades**: Visualisation des points d'entrée et de sortie
-- **Évolution du Portefeuille**: Suivi de la valeur du capital
-- **Indicateurs Techniques**: RSI, MACD avec seuils adaptatifs
-- **Distribution des P&L**: Analyse des gains et pertes
-- **Résumé des Performances**: Métriques détaillées
+- **Price and Trades**: Visualization of entry and exit points
+- **Portfolio Evolution**: Capital value tracking
+- **Technical Indicators**: RSI, MACD with adaptive thresholds
+- **P&L Distribution**: Analysis of gains and losses
+- **Performance Summary**: Detailed metrics
 
-### 🔍 Observations Clés
+### 🔍 Key Observations
 
-1. **Bot Conservateur**: Très sélectif, aucun trade effectué sur la période testée
-2. **Bot Agressif**: Plus actif avec des paramètres permissifs
-3. **Gestion du Risque**: Stop loss et take profit automatiques
-4. **Analyse Technique**: Utilisation de RSI, MACD et moyennes mobiles
+1. **Conservative Bot**: Very selective, no trades executed during test period
+2. **Aggressive Bot**: More active with permissive parameters
+3. **Risk Management**: Automatic stop loss and take profit
+4. **Technical Analysis**: Use of RSI, MACD and moving averages
 
-## 🚀 Fonctionnalités
+## 🚀 Features
 
-### 📈 Collecte de Données
-- **Yahoo Finance**: Récupération en temps réel
-- **Indicateurs Techniques**: RSI, MACD, Bandes de Bollinger, Moyennes mobiles
-- **Données Historiques**: Jusqu'à 2 ans de données
+### 📈 Data Collection
+- **Yahoo Finance**: Real-time data retrieval
+- **Technical Indicators**: RSI, MACD, Bollinger Bands, Moving averages
+- **Historical Data**: Up to 2 years of data
 
-### 🧠 Analyse Technique
-- **RSI (Relative Strength Index)**: Détection de surachat/survente
-- **MACD**: Convergence/divergence des moyennes mobiles
-- **Bandes de Bollinger**: Volatilité et niveaux de support/résistance
-- **Moyennes Mobiles**: Tendances court et long terme
+### 🧠 Technical Analysis
+- **RSI (Relative Strength Index)**: Overbought/oversold detection
+- **MACD**: Moving average convergence/divergence
+- **Bollinger Bands**: Volatility and support/resistance levels
+- **Moving Averages**: Short and long-term trends
 
-### 🤖 Bots de Trading
+### 🤖 Trading Bots
 
-#### Bot Conservateur
-- Seuil de confiance élevé (0.4)
+#### Conservative Bot
+- High confidence threshold (0.4)
 - Stop loss: 3%
 - Take profit: 8%
-- Position max: 20% du capital
-- Risque par trade: 3%
+- Max position: 20% of capital
+- Risk per trade: 3%
 
-#### Bot Agressif
-- Seuil de confiance bas (0.15)
+#### Aggressive Bot
+- Low confidence threshold (0.15)
 - Stop loss: 1.5%
 - Take profit: 4%
-- Position max: 30% du capital
-- Risque par trade: 5%
+- Max position: 30% of capital
+- Risk per trade: 5%
 
-### 🧠 Prédiction LSTM
-- **Modèle Ultra-Avancé**: Architecture LSTM complexe
-- **Features Multiples**: Prix, volume, indicateurs techniques
-- **Prédiction Multi-Horizon**: 1, 5, 10 jours
-- **Backtesting**: Validation sur données historiques
+### 🧠 LSTM Prediction
+- **Ultra-Advanced Model**: Complex LSTM architecture
+- **Multiple Features**: Price, volume, technical indicators
+- **Multi-Horizon Prediction**: 1, 5, 10 days
+- **Backtesting**: Historical data validation
 
-## 📁 Structure du Projet
+## 📁 Project Structure
 
 ```
 Share price prediction/
 ├── src/
-│   ├── core/                 # Modules principaux
+│   ├── core/                 # Core modules
 │   │   ├── data_collector.py
 │   │   ├── technical_analysis.py
 │   │   ├── trading_bot_simple.py
 │   │   └── lstm_ultra.py
-│   ├── demos/               # Scripts de démonstration
+│   ├── demos/               # Demo scripts
 │   │   ├── demo_trading_final.py
 │   │   ├── demo_trading_aggressive.py
 │   │   └── demo_trading_complete.py
 │   ├── config/              # Configuration
-│   ├── utils/               # Utilitaires
-│   └── main.py              # Interface principale
-├── images/                  # Graphiques générés
-├── logs/                    # Logs de trading
-├── tests/                   # Tests unitaires
+│   ├── utils/               # Utilities
+│   └── main.py              # Main interface
+├── images/                  # Generated charts
+├── logs/                    # Trading logs
+├── tests/                   # Unit tests
 ├── docs/                    # Documentation
-├── requirements.txt         # Dépendances
-└── README.md               # Ce fichier
+├── requirements.txt         # Dependencies
+└── README.md               # This file
 ```
 
 ## 🛠️ Installation
 
-### Prérequis
+### Prerequisites
 ```bash
 Python 3.8+
 pip
 ```
 
-### Installation des Dépendances
+### Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### Dépendances Principales
-- `yfinance`: Données boursières
-- `pandas`: Manipulation de données
-- `numpy`: Calculs numériques
-- `matplotlib`: Graphiques
+### Main Dependencies
+- `yfinance`: Stock data
+- `pandas`: Data manipulation
+- `numpy`: Numerical calculations
+- `matplotlib`: Charts
 - `scikit-learn`: Machine Learning
-- `tensorflow`: Modèles LSTM (optionnel)
+- `tensorflow`: LSTM models (optional)
 
-## 🚀 Utilisation
+## 🚀 Usage
 
-### Démonstration Complète
+### Complete Demo
 ```bash
 cd src/demos
 python demo_trading_final.py
 ```
 
-### Simulation Conservateur vs Agressif
+### Conservative vs Aggressive Simulation
 ```bash
 python demo_trading_final.py
 ```
 
-### Simulation sur une Action Spécifique
+### Single Stock Simulation
 ```bash
 python demo_trading_final.py single AAPL conservative
 python demo_trading_final.py single MSFT aggressive
 ```
 
-### Interface Principale
+### Main Interface
 ```bash
 cd src
 python main.py
 ```
 
-## 📊 Exemples de Commandes
+## 📊 Code Examples
 
-### Analyse Technique
+### Technical Analysis
 ```python
 from src.core.data_collector import DataCollector
 from src.core.technical_analysis import TechnicalAnalysis
 
-# Récupérer les données
+# Get data
 collector = DataCollector()
 data = collector.get_stock_data('AAPL', period='1y')
 
-# Analyse technique
+# Technical analysis
 analyzer = TechnicalAnalysis(data)
 analyzer.add_all_indicators()
 signals = analyzer.get_signals()
 ```
 
-### Bot de Trading
+### Trading Bot
 ```python
 from src.core.trading_bot_simple import SimpleTradingBot
 
-# Créer un bot
+# Create bot
 bot = SimpleTradingBot(
     symbol='AAPL',
     initial_capital=10000,
@@ -181,29 +181,29 @@ bot = SimpleTradingBot(
     max_position_size=0.2
 )
 
-# Lancer une session
+# Run session
 bot.run_trading_session(days=30)
 metrics = bot.get_performance_metrics()
 ```
 
-## 📈 Résultats des Tests
+## 📈 Test Results
 
-### Performance des Bots
+### Bot Performance
 
-| Action | Bot Conservateur | Bot Agressif | Meilleur |
-|--------|------------------|--------------|----------|
-| AAPL   | 0.00% (0 trades) | -1.69% (9 trades) | Conservateur |
-| MSFT   | 0.00% (0 trades) | +0.02% (1 trade) | Agressif |
-| TSLA   | 0.00% (0 trades) | -0.20% (1 trade) | Conservateur |
+| Stock | Conservative Bot | Aggressive Bot | Best |
+|-------|------------------|----------------|------|
+| AAPL  | 0.00% (0 trades) | -1.69% (9 trades) | Conservative |
+| MSFT  | 0.00% (0 trades) | +0.02% (1 trade) | Aggressive |
+| TSLA  | 0.00% (0 trades) | -0.20% (1 trade) | Conservative |
 
 ### Observations
-- **Bot Conservateur**: Évite les pertes mais manque d'opportunités
-- **Bot Agressif**: Plus d'activité mais risque de pertes
-- **Gestion du Risque**: Cruciale pour la performance
+- **Conservative Bot**: Avoids losses but misses opportunities
+- **Aggressive Bot**: More activity but risk of losses
+- **Risk Management**: Crucial for performance
 
 ## 🔧 Configuration
 
-### Paramètres du Bot Conservateur
+### Conservative Bot Parameters
 ```python
 confidence_threshold = 0.4
 stop_loss_pct = 0.03
@@ -212,7 +212,7 @@ max_position_size = 0.2
 risk_per_trade = 0.03
 ```
 
-### Paramètres du Bot Agressif
+### Aggressive Bot Parameters
 ```python
 confidence_threshold = 0.15
 stop_loss_pct = 0.015
@@ -221,9 +221,9 @@ max_position_size = 0.3
 risk_per_trade = 0.05
 ```
 
-## 📊 Graphiques Disponibles
+## 📊 Available Charts
 
-### Graphiques par Action
+### Stock-Specific Charts
 - `trading_simulation_AAPL_conservative.png`
 - `trading_simulation_AAPL_aggressive.png`
 - `trading_simulation_MSFT_conservative.png`
@@ -231,91 +231,91 @@ risk_per_trade = 0.05
 - `trading_simulation_TSLA_conservative.png`
 - `trading_simulation_TSLA_aggressive.png`
 
-### Graphiques de Comparaison
-- `trading_comparison_final.png`: Comparaison complète
+### Comparison Charts
+- `trading_comparison_final.png`: Complete comparison
 
-## 🧪 Tests
+## 🧪 Testing
 
-### Tests Unitaires
+### Unit Tests
 ```bash
 cd tests
 python -m pytest
 ```
 
-### Tests de Performance
+### Performance Tests
 ```bash
 python test_trading_bot.py
 python test_lstm_predictor.py
 ```
 
-## 📝 Logs et Monitoring
+## 📝 Logs and Monitoring
 
-### Logs de Trading
-- Fichiers dans `logs/`
+### Trading Logs
+- Files in `logs/`
 - Format: `trading_system_YYYYMMDD.log`
-- Détails des trades et performances
+- Trade details and performance
 
-### Métriques de Performance
-- Rendement total
-- Nombre de trades
-- Taux de réussite
-- Gain/perte moyen
-- Ratio de Sharpe
+### Performance Metrics
+- Total return
+- Number of trades
+- Success rate
+- Average gain/loss
+- Sharpe ratio
 
-## 🔒 Gestion du Risque
+## 🔒 Risk Management
 
-### Stop Loss Automatique
-- Protection contre les pertes importantes
-- Seuils configurables par bot
-- Exécution automatique
+### Automatic Stop Loss
+- Protection against significant losses
+- Configurable thresholds per bot
+- Automatic execution
 
 ### Take Profit
-- Sécurisation des gains
-- Niveaux adaptatifs
-- Optimisation des rendements
+- Securing gains
+- Adaptive levels
+- Return optimization
 
 ### Position Sizing
-- Limitation de l'exposition
-- Calcul basé sur le risque
-- Diversification automatique
+- Exposure limitation
+- Risk-based calculation
+- Automatic diversification
 
-## 🚀 Améliorations Futures
+## 🚀 Future Improvements
 
-### Fonctionnalités Planifiées
-- [ ] Interface web
-- [ ] Trading en temps réel
-- [ ] Plus d'indicateurs techniques
-- [ ] Optimisation des paramètres
-- [ ] Backtesting avancé
-- [ ] Gestion multi-actifs
+### Planned Features
+- [ ] Web interface
+- [ ] Real-time trading
+- [ ] More technical indicators
+- [ ] Parameter optimization
+- [ ] Advanced backtesting
+- [ ] Multi-asset management
 
-### Optimisations Techniques
-- [ ] Parallélisation des calculs
-- [ ] Cache des données
-- [ ] Optimisation mémoire
-- [ ] API REST
+### Technical Optimizations
+- [ ] Calculation parallelization
+- [ ] Data caching
+- [ ] Memory optimization
+- [ ] REST API
 
-## 📄 Licence
+## 📄 License
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
-## 🤝 Contribution
+## 🤝 Contributing
 
-Les contributions sont les bienvenues ! Veuillez :
+Contributions are welcome! Please:
 
-1. Fork le projet
-2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)
-3. Commit les changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📞 Support
 
-Pour toute question ou problème :
-- Ouvrir une issue sur GitHub
-- Consulter la documentation dans `docs/`
-- Vérifier les logs dans `logs/`
+For any questions or issues:
+- Open an issue on GitHub
+- Check documentation in `docs/`
+- Review logs in `logs/`
 
 ---
 
-**⚠️ Avertissement**: Ce système est destiné à des fins éducatives et de recherche. Le trading comporte des risques de perte. Utilisez à vos propres risques. 
+**⚠️ Disclaimer**: This system is intended for educational and research purposes. Trading involves risk of loss. Use at your own risk. 
