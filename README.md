@@ -33,19 +33,6 @@ We executed real simulations over 30 days for three major stocks:
 
 ### AAPL Trading Analysis
 
-#### Conservative Bot Results
-![AAPL Conservative Trading](src/images/trading_simulation_AAPL_conservative.png)
-
-**Analysis**: The conservative bot detected no trading opportunities for AAPL, maintaining capital preservation but missing potential gains.
-
-**🔍 Detailed Interpretation**:
-- **Market Conditions**: AAPL showed mixed signals with RSI oscillating in neutral territory (30-70 range)
-- **Entry Barriers**: High confidence threshold (0.4) prevented trades during uncertain market conditions
-- **Technical Signals**: RSI at 43.05 and MACD at -0.9334 created conflicting signals
-- **Risk Assessment**: Conservative approach correctly identified high volatility environment
-- **Capital Preservation**: Zero trades resulted in 0% return but also 0% risk
-- **Missed Opportunities**: Several potential entry points were bypassed due to strict criteria
-
 #### Aggressive Bot Results
 ![AAPL Aggressive Trading](src/images/trading_simulation_AAPL_aggressive.png)
 
@@ -65,19 +52,6 @@ We executed real simulations over 30 days for three major stocks:
 
 ### MSFT Trading Analysis
 
-#### Conservative Bot Results
-![MSFT Conservative Trading](src/images/trading_simulation_MSFT_conservative.png)
-
-**Analysis**: Conservative approach avoided trading due to elevated RSI levels, preserving capital.
-
-**🔍 Detailed Interpretation**:
-- **RSI Analysis**: Elevated RSI at 64.61 approached overbought territory (70 threshold)
-- **Momentum Assessment**: Strong upward momentum created unfavorable entry conditions
-- **Risk Avoidance**: Conservative bot correctly identified potential reversal risk
-- **Market Timing**: Bot waited for better entry conditions that never materialized
-- **Capital Efficiency**: Zero trades preserved capital during uncertain period
-- **Strategic Patience**: Demonstrated discipline in waiting for optimal conditions
-
 #### Aggressive Bot Results
 ![MSFT Aggressive Trading](src/images/trading_simulation_MSFT_aggressive.png)
 
@@ -95,19 +69,6 @@ We executed real simulations over 30 days for three major stocks:
 - **Timing Precision**: Perfect entry and exit timing demonstrated market understanding
 
 ### TSLA Trading Analysis
-
-#### Conservative Bot Results
-![TSLA Conservative Trading](src/images/trading_simulation_TSLA_conservative.png)
-
-**Analysis**: No trades executed due to high volatility and unclear signals.
-
-**🔍 Detailed Interpretation**:
-- **Volatility Assessment**: TSLA's inherent high volatility created uncertain trading environment
-- **Signal Clarity**: Mixed technical signals prevented clear entry decisions
-- **Risk Perception**: Conservative bot correctly identified TSLA as high-risk asset
-- **Market Understanding**: Bot recognized TSLA's unpredictable price movements
-- **Capital Protection**: Avoided potential significant losses in volatile conditions
-- **Strategic Wisdom**: Sometimes the best trade is no trade
 
 #### Aggressive Bot Results
 ![TSLA Aggressive Trading](src/images/trading_simulation_TSLA_aggressive.png)
