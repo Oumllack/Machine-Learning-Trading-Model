@@ -248,3 +248,134 @@ For questions and support:
 **Version**: 1.0.0  
 **Last Updated**: December 2024  
 **Author**: Advanced Trading Systems Research Team 
+
+## 🧪 Scientific Case Studies & Interpretations
+
+Below are detailed scientific analyses for three major stocks, including all generated charts, their interpretations, and scientific conclusions.
+
+### Case Study 1: Apple Inc. (AAPL)
+
+#### 1. Price Chart & Technical Indicators
+
+![AAPL Price Chart](images/analysis_AAPL_price_chart.png)
+
+*Interpretation:*  
+The price chart shows Apple's stock in a consolidation phase, with the price trading below the 20, 50, and 200-day moving averages. The Bollinger Bands indicate moderate volatility. This suggests a lack of strong bullish momentum and a possible period of indecision in the market.
+
+![AAPL Technical Indicators](images/analysis_AAPL_technical_indicators.png)
+
+*Analysis:*  
+- **RSI** is oscillating around 50, indicating a neutral momentum.
+- **MACD** is negative, showing bearish divergence.
+- **Stochastic Oscillator** is in a neutral zone, not indicating overbought or oversold conditions.
+- **Williams %R** confirms the absence of extreme market conditions.
+
+#### 2. Performance & Risk Analysis
+
+![AAPL Performance](images/analysis_AAPL_performance.png)
+
+*Interpretation:*  
+- The daily returns distribution is slightly negatively skewed, indicating more frequent small losses than gains.
+- Cumulative returns show a slight decline over the period (-1.71%).
+- Rolling volatility is moderate, with some spikes during market events.
+- The volume-price relationship is typical for a large-cap stock.
+
+#### 3. Correlation & Returns
+
+![AAPL Correlation Matrix](images/analysis_AAPL_correlation_matrix.png)
+
+*Interpretation:*  
+Technical indicators are moderately correlated, with the strongest relationships between volatility and momentum indicators.
+
+![AAPL Returns Analysis](images/analysis_AAPL_returns_analysis.png)
+
+*Interpretation:*  
+Returns are close to a normal distribution, with some fat tails. The Q-Q plot shows mild deviation from normality, typical for equity returns.
+
+#### 4. Trading Simulation
+
+![AAPL Trading Performance](images/analysis_AAPL_trading_performance.png)
+
+*Conclusion:*  
+The conservative trading bot did not execute trades during this period, prioritizing capital preservation. The system's risk filters prevented entry in a non-trending, uncertain market, which is a sign of robust risk management.
+
+---
+
+### Case Study 2: Microsoft Corporation (MSFT)
+
+#### 1. Price Chart & Technical Indicators
+
+![MSFT Price Chart](images/analysis_MSFT_price_chart.png)
+
+*Interpretation:*  
+Microsoft's price is in a strong uptrend, consistently above its moving averages. The Bollinger Bands are widening, indicating increasing volatility and trend strength.
+
+![MSFT Technical Indicators](images/analysis_MSFT_technical_indicators.png)
+
+*Analysis:*  
+- **RSI** is above 60, showing bullish momentum.
+- **MACD** is positive, confirming the uptrend.
+- **Stochastic Oscillator** is in bullish territory.
+- **Williams %R** indicates strong buying pressure.
+
+#### 2. Performance & Risk Analysis
+
+![MSFT Performance](images/analysis_MSFT_performance.png)
+
+*Interpretation:*  
+- Cumulative returns are strongly positive (+9.67%).
+- Volatility is lower than TSLA but higher than AAPL, reflecting a healthy growth stock.
+- The returns distribution is slightly positively skewed.
+
+#### 3. Trading Simulation
+
+![MSFT Trading Performance](images/analysis_MSFT_trading_performance.png)
+
+*Conclusion:*  
+Despite strong technicals, the conservative bot did not trade, showing that the system's filters are strict. In a real-world scenario, more permissive parameters would likely have captured profitable trades in this trending market.
+
+---
+
+### Case Study 3: Tesla Inc. (TSLA)
+
+#### 1. Price Chart & Technical Indicators
+
+![TSLA Price Chart](images/analysis_TSLA_price_chart.png)
+
+*Interpretation:*  
+Tesla's price chart shows high volatility and dramatic swings, with the price often breaking above and below the moving averages. The Bollinger Bands are wide, reflecting extreme volatility.
+
+![TSLA Technical Indicators](images/analysis_TSLA_technical_indicators.png)
+
+*Analysis:*  
+- **RSI** is frequently above 70, indicating overbought conditions.
+- **MACD** shows frequent bullish and bearish crossovers.
+- **Stochastic Oscillator** and **Williams %R** both indicate frequent overbought/oversold signals, typical for a high-beta stock.
+
+#### 2. Performance & Risk Analysis
+
+![TSLA Performance](images/analysis_TSLA_performance.png)
+
+*Interpretation:*  
+- Cumulative returns are exceptionally high (+91.08%), but with very high volatility (74.57%).
+- The returns distribution is fat-tailed, indicating frequent large moves.
+
+#### 3. Trading Simulation
+
+![TSLA Trading Performance](images/analysis_TSLA_trading_performance.png)
+
+*Conclusion:*  
+The bot did not trade due to extreme volatility and risk filters. This is a sign of robust risk management, but with more aggressive parameters, the system could exploit high-momentum opportunities.
+
+---
+
+## 📊 Global Scientific Conclusion
+
+- **Risk Management**: The system's strict filters prevent trading in uncertain or high-risk conditions, prioritizing capital preservation.
+- **Market Adaptation**: In trending markets (MSFT), the system is ready to capture opportunities if parameters are adjusted.
+- **Volatility Handling**: For high-volatility stocks (TSLA), the system avoids overtrading, but can be tuned for more aggressive strategies.
+- **Interpretability**: Each chart and indicator is explained, allowing for transparent decision-making and scientific validation.
+
+**For further details, see the full documentation in `docs/` or the scientific article section.**
+
+--- 
