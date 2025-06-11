@@ -370,13 +370,13 @@ class TradingBot:
 
 def run_trading_simulation(symbol='AAPL', days=60, capital=10000, aggressive=False):
     """
-    Exécute une simulation de trading
+    Execute a trading simulation
     """
-    mode = "AGRESSIVE" if aggressive else "CONSERVATEUR"
-    print(f"🚀 SIMULATION DE TRADING {mode} - {symbol}")
+    mode = "AGGRESSIVE" if aggressive else "CONSERVATIVE"
+    print(f"🚀 TRADING SIMULATION {mode} - {symbol}")
     print("=" * 60)
     
-    # Créer le bot
+    # Create bot
     bot = TradingBot(
         symbol=symbol,
         initial_capital=capital,
@@ -385,80 +385,80 @@ def run_trading_simulation(symbol='AAPL', days=60, capital=10000, aggressive=Fal
         aggressive=aggressive
     )
     
-    print(f"📊 Configuration {mode}:")
+    print(f"📊 {mode} Configuration:")
     print(f"  Capital: {capital:,.2f} €")
-    print(f"  Risque par trade: {bot.risk_per_trade*100:.1f}%")
-    print(f"  Position max: {bot.max_position_size*100:.1f}%")
-    print(f"  Seuil confiance: {bot.confidence_threshold}")
+    print(f"  Risk per trade: {bot.risk_per_trade*100:.1f}%")
+    print(f"  Max position: {bot.max_position_size*100:.1f}%")
+    print(f"  Confidence threshold: {bot.confidence_threshold}")
     print(f"  Stop loss: {bot.stop_loss_pct*100:.1f}%")
     print(f"  Take profit: {bot.take_profit_pct*100:.1f}%")
     
-    # Préparer les données
-    print("📈 Récupération des données...")
+    # Prepare data
+    print("📈 Retrieving data...")
     data = bot.prepare_data(period="1y")
     
     if data is None:
-        print(f"❌ Impossible de récupérer les données pour {symbol}")
+        print(f"❌ Unable to retrieve data for {symbol}")
         return None, None
     
-    print(f"✅ {len(data)} enregistrements récupérés")
+    print(f"✅ {len(data)} records retrieved")
     
-    # Afficher les informations actuelles
+    # Display current information
     current_price = data['Close'].iloc[-1]
-    print(f"💰 Prix actuel: {current_price:.2f} €")
+    print(f"💰 Current price: {current_price:.2f} €")
     
-    # Afficher les indicateurs techniques
+    # Display technical indicators
     if 'RSI' in data.columns:
-        print(f"📊 RSI actuel: {data['RSI'].iloc[-1]:.2f}")
+        print(f"📊 Current RSI: {data['RSI'].iloc[-1]:.2f}")
     if 'MACD' in data.columns:
-        print(f"📊 MACD actuel: {data['MACD'].iloc[-1]:.4f}")
+        print(f"📊 Current MACD: {data['MACD'].iloc[-1]:.4f}")
     
-    # Exécuter la simulation
-    print(f"🔄 Simulation sur {days} jours...")
+    # Execute simulation
+    print(f"🔄 Simulation over {days} days...")
     bot.run_trading_session(days=days)
     
-    # Obtenir les métriques
+    # Get metrics
     metrics = bot.get_performance_metrics()
     
-    print(f"\n📊 RÉSULTATS DE LA SIMULATION")
+    print(f"\n📊 SIMULATION RESULTS")
     print("=" * 50)
-    print(f"Rendement total: {metrics.get('total_return_pct', 0):.2f}%")
-    print(f"Nombre de trades: {metrics.get('total_trades', 0)}")
-    print(f"Taux de réussite: {metrics.get('win_rate', 0):.2%}")
-    print(f"Gain moyen: {metrics.get('avg_win', 0):,.2f} €")
-    print(f"Perte moyenne: {metrics.get('avg_loss', 0):,.2f} €")
-    print(f"Capital final: {metrics.get('final_capital', capital):,.2f} €")
+    print(f"Total return: {metrics.get('total_return_pct', 0):.2f}%")
+    print(f"Number of trades: {metrics.get('total_trades', 0)}")
+    print(f"Win rate: {metrics.get('win_rate', 0):.2%}")
+    print(f"Average win: {metrics.get('avg_win', 0):,.2f} €")
+    print(f"Average loss: {metrics.get('avg_loss', 0):,.2f} €")
+    print(f"Final capital: {metrics.get('final_capital', capital):,.2f} €")
     
     return bot, metrics
 
 def generate_trading_charts(bot, symbol, save_dir='../images'):
     """
-    Génère des graphiques de trading avec des données réelles
+    Generate trading charts with real data
     """
-    mode = "AGRESSIF" if bot.aggressive else "CONSERVATEUR"
-    print(f"📈 Génération des graphiques pour {symbol} ({mode})...")
+    mode = "AGGRESSIVE" if bot.aggressive else "CONSERVATIVE"
+    print(f"📈 Generating charts for {symbol} ({mode})...")
     
-    # Créer le dossier si nécessaire
+    # Create directory if needed
     os.makedirs(save_dir, exist_ok=True)
     
-    # Données du bot
+    # Bot data
     data = bot.data
     trades = bot.trades
     portfolio_values = bot.portfolio_values
     
-    # Configuration du style
+    # Style configuration
     plt.style.use('default')
     plt.rcParams['figure.figsize'] = (15, 12)
     plt.rcParams['font.size'] = 10
     
-    # Créer la figure
+    # Create figure
     fig = plt.figure(figsize=(15, 12))
     
-    # 1. Graphique des prix avec trades
+    # 1. Price chart with trades
     ax1 = plt.subplot(3, 2, 1)
-    plt.plot(data.index, data['Close'], label='Prix de clôture', linewidth=2, color='blue')
+    plt.plot(data.index, data['Close'], label='Close Price', linewidth=2, color='blue')
     
-    # Ajouter les trades
+    # Add trades
     if trades:
         buy_trades = [t for t in trades if t['type'] == 'BUY']
         sell_trades = [t for t in trades if t['type'] == 'SELL']
@@ -466,49 +466,49 @@ def generate_trading_charts(bot, symbol, save_dir='../images'):
         if buy_trades:
             buy_dates = [t['date'] for t in buy_trades]
             buy_prices = [t['price'] for t in buy_trades]
-            plt.scatter(buy_dates, buy_prices, color='green', marker='^', s=100, label='Achats', zorder=5)
+            plt.scatter(buy_dates, buy_prices, color='green', marker='^', s=100, label='Buys', zorder=5)
         
         if sell_trades:
             sell_dates = [t['date'] for t in sell_trades]
             sell_prices = [t['price'] for t in sell_trades]
-            plt.scatter(sell_dates, sell_prices, color='red', marker='v', s=100, label='Ventes', zorder=5)
+            plt.scatter(sell_dates, sell_prices, color='red', marker='v', s=100, label='Sells', zorder=5)
     
-    plt.title(f'Prix et Trades - {symbol} ({mode})', fontsize=14, fontweight='bold')
+    plt.title(f'Price and Trades - {symbol} ({mode})', fontsize=14, fontweight='bold')
     plt.xlabel('Date')
-    plt.ylabel('Prix (€)')
+    plt.ylabel('Price (€)')
     plt.legend()
     plt.grid(True, alpha=0.3)
     
-    # 2. Évolution du portefeuille
+    # 2. Portfolio evolution
     ax2 = plt.subplot(3, 2, 2)
     if portfolio_values:
         dates = list(portfolio_values.keys())
         values = list(portfolio_values.values())
-        plt.plot(dates, values, label='Valeur du portefeuille', linewidth=2, color='purple')
-        plt.axhline(y=bot.initial_capital, color='red', linestyle='--', label='Capital initial')
-        plt.title(f'Évolution du Portefeuille - {symbol}', fontsize=14, fontweight='bold')
+        plt.plot(dates, values, label='Portfolio Value', linewidth=2, color='purple')
+        plt.axhline(y=bot.initial_capital, color='red', linestyle='--', label='Initial Capital')
+        plt.title(f'Portfolio Evolution - {symbol}', fontsize=14, fontweight='bold')
         plt.xlabel('Date')
-        plt.ylabel('Valeur (€)')
+        plt.ylabel('Value (€)')
         plt.legend()
         plt.grid(True, alpha=0.3)
     
-    # 3. Indicateurs techniques - RSI
+    # 3. Technical indicators - RSI
     ax3 = plt.subplot(3, 2, 3)
     if 'RSI' in data.columns:
         plt.plot(data.index, data['RSI'], label='RSI', linewidth=2, color='orange')
         if bot.aggressive:
-            plt.axhline(y=55, color='red', linestyle='--', alpha=0.7, label='Seuil agressif (55)')
-            plt.axhline(y=45, color='green', linestyle='--', alpha=0.7, label='Seuil agressif (45)')
+            plt.axhline(y=55, color='red', linestyle='--', alpha=0.7, label='Aggressive Threshold (55)')
+            plt.axhline(y=45, color='green', linestyle='--', alpha=0.7, label='Aggressive Threshold (45)')
         else:
-            plt.axhline(y=70, color='red', linestyle='--', alpha=0.7, label='Surachat (70)')
-            plt.axhline(y=30, color='green', linestyle='--', alpha=0.7, label='Survente (30)')
+            plt.axhline(y=70, color='red', linestyle='--', alpha=0.7, label='Overbought (70)')
+            plt.axhline(y=30, color='green', linestyle='--', alpha=0.7, label='Oversold (30)')
         plt.title(f'RSI - {symbol}', fontsize=14, fontweight='bold')
         plt.xlabel('Date')
         plt.ylabel('RSI')
         plt.legend()
         plt.grid(True, alpha=0.3)
     
-    # 4. Indicateurs techniques - MACD
+    # 4. Technical indicators - MACD
     ax4 = plt.subplot(3, 2, 4)
     if 'MACD' in data.columns and 'MACD_Signal' in data.columns:
         plt.plot(data.index, data['MACD'], label='MACD', linewidth=2, color='blue')
@@ -519,7 +519,7 @@ def generate_trading_charts(bot, symbol, save_dir='../images'):
         plt.legend()
         plt.grid(True, alpha=0.3)
     
-    # 5. Distribution des rendements
+    # 5. Returns distribution
     ax5 = plt.subplot(3, 2, 5)
     if trades:
         returns = []
@@ -530,28 +530,28 @@ def generate_trading_charts(bot, symbol, save_dir='../images'):
         if returns:
             plt.hist(returns, bins=15, alpha=0.7, color='skyblue', edgecolor='black')
             plt.axvline(x=0, color='red', linestyle='--', label='Break-even')
-            plt.title(f'Distribution des P&L - {symbol}', fontsize=14, fontweight='bold')
+            plt.title(f'P&L Distribution - {symbol}', fontsize=14, fontweight='bold')
             plt.xlabel('P&L (€)')
-            plt.ylabel('Fréquence')
+            plt.ylabel('Frequency')
             plt.legend()
             plt.grid(True, alpha=0.3)
     
-    # 6. Résumé des performances
+    # 6. Performance summary
     ax6 = plt.subplot(3, 2, 6)
     plt.axis('off')
     
     metrics = bot.get_performance_metrics()
-    summary_text = f"RÉSUMÉ DES PERFORMANCES\n{symbol} ({mode})\n\n"
-    summary_text += f"Rendement: {metrics.get('total_return_pct', 0):.2f}%\n"
+    summary_text = f"PERFORMANCE SUMMARY\n{symbol} ({mode})\n\n"
+    summary_text += f"Return: {metrics.get('total_return_pct', 0):.2f}%\n"
     summary_text += f"Trades: {metrics.get('total_trades', 0)}\n"
-    summary_text += f"Taux de réussite: {metrics.get('win_rate', 0):.2%}\n"
-    summary_text += f"Gain moyen: {metrics.get('avg_win', 0):,.0f} €\n"
-    summary_text += f"Perte moyenne: {metrics.get('avg_loss', 0):,.0f} €\n"
-    summary_text += f"Capital final: {metrics.get('final_capital', bot.initial_capital):,.0f} €\n"
+    summary_text += f"Win Rate: {metrics.get('win_rate', 0):.2%}\n"
+    summary_text += f"Avg Win: {metrics.get('avg_win', 0):,.0f} €\n"
+    summary_text += f"Avg Loss: {metrics.get('avg_loss', 0):,.0f} €\n"
+    summary_text += f"Final Capital: {metrics.get('final_capital', bot.initial_capital):,.0f} €\n"
     
     if trades:
-        summary_text += f"\nDÉTAIL DES TRADES:\n"
-        for i, trade in enumerate(trades[-5:], 1):  # Derniers 5 trades
+        summary_text += f"\nTRADE DETAILS:\n"
+        for i, trade in enumerate(trades[-5:], 1):  # Last 5 trades
             summary_text += f"{i}. {trade['type']} {trade['shares']} @ {trade['price']:.2f}€\n"
     
     plt.text(0.1, 0.9, summary_text, transform=plt.gca().transAxes, 
@@ -563,24 +563,24 @@ def generate_trading_charts(bot, symbol, save_dir='../images'):
     plt.savefig(f'{save_dir}/trading_simulation_{symbol}{suffix}.png', dpi=300, bbox_inches='tight')
     plt.close()
     
-    print(f"✅ Graphique sauvegardé: trading_simulation_{symbol}{suffix}.png")
+    print(f"✅ Chart saved: trading_simulation_{symbol}{suffix}.png")
 
 def run_comparison_simulations():
     """
-    Lance des simulations comparatives conservateur vs agressif
+    Run comparative simulations conservative vs aggressive
     """
-    print("🔄 SIMULATIONS COMPARATIVES CONSERVATEUR vs AGRESSIF")
+    print("🔄 COMPARATIVE SIMULATIONS CONSERVATIVE vs AGGRESSIVE")
     print("=" * 70)
     
     symbols = ['AAPL', 'MSFT', 'TSLA']
     results = {}
     
     for symbol in symbols:
-        print(f"\n📈 Test de {symbol}")
+        print(f"\n📈 Testing {symbol}")
         print("-" * 50)
         
-        # Bot conservateur
-        print("🤖 Bot conservateur:")
+        # Conservative bot
+        print("🤖 Conservative bot:")
         conservative_bot, conservative_metrics = run_trading_simulation(
             symbol=symbol, days=30, capital=5000, aggressive=False
         )
@@ -588,8 +588,8 @@ def run_comparison_simulations():
         if conservative_bot:
             generate_trading_charts(conservative_bot, symbol)
         
-        # Bot agressif
-        print("\n🤖 Bot agressif:")
+        # Aggressive bot
+        print("\n🤖 Aggressive bot:")
         aggressive_bot, aggressive_metrics = run_trading_simulation(
             symbol=symbol, days=30, capital=5000, aggressive=True
         )
@@ -597,26 +597,26 @@ def run_comparison_simulations():
         if aggressive_bot:
             generate_trading_charts(aggressive_bot, symbol)
         
-        # Comparaison
+        # Comparison
         if conservative_metrics and aggressive_metrics:
             results[symbol] = {
                 'conservative': conservative_metrics,
                 'aggressive': aggressive_metrics
             }
             
-            print(f"\n📊 COMPARAISON {symbol}:")
-            print(f"  Conservateur: {conservative_metrics.get('total_return_pct', 0):.2f}% ({conservative_metrics.get('total_trades', 0)} trades)")
-            print(f"  Agressif: {aggressive_metrics.get('total_return_pct', 0):.2f}% ({aggressive_metrics.get('total_trades', 0)} trades)")
+            print(f"\n📊 COMPARISON {symbol}:")
+            print(f"  Conservative: {conservative_metrics.get('total_return_pct', 0):.2f}% ({conservative_metrics.get('total_trades', 0)} trades)")
+            print(f"  Aggressive: {aggressive_metrics.get('total_return_pct', 0):.2f}% ({aggressive_metrics.get('total_trades', 0)} trades)")
     
-    # Graphique de comparaison
+    # Comparison chart
     if results:
         create_comparison_chart(results)
 
 def create_comparison_chart(results):
     """
-    Crée un graphique de comparaison des performances
+    Create a performance comparison chart
     """
-    print("📊 Création du graphique de comparaison...")
+    print("📊 Creating comparison chart...")
     
     symbols = list(results.keys())
     conservative_returns = [results[s]['conservative'].get('total_return_pct', 0) for s in symbols]
@@ -626,55 +626,55 @@ def create_comparison_chart(results):
     
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 12))
     
-    # Rendements
+    # Returns
     x = np.arange(len(symbols))
     width = 0.35
     
-    bars1 = ax1.bar(x - width/2, conservative_returns, width, label='Conservateur', color='lightblue')
-    bars2 = ax1.bar(x + width/2, aggressive_returns, width, label='Agressif', color='lightcoral')
+    bars1 = ax1.bar(x - width/2, conservative_returns, width, label='Conservative', color='lightblue')
+    bars2 = ax1.bar(x + width/2, aggressive_returns, width, label='Aggressive', color='lightcoral')
     
-    ax1.set_title('Rendements par Symbole', fontsize=14, fontweight='bold')
-    ax1.set_ylabel('Rendement (%)')
+    ax1.set_title('Returns by Symbol', fontsize=14, fontweight='bold')
+    ax1.set_ylabel('Return (%)')
     ax1.set_xticks(x)
     ax1.set_xticklabels(symbols)
     ax1.legend()
     ax1.grid(True, alpha=0.3)
     
-    # Nombre de trades
-    bars3 = ax2.bar(x - width/2, conservative_trades, width, label='Conservateur', color='lightblue')
-    bars4 = ax2.bar(x + width/2, aggressive_trades, width, label='Agressif', color='lightcoral')
+    # Number of trades
+    bars3 = ax2.bar(x - width/2, conservative_trades, width, label='Conservative', color='lightblue')
+    bars4 = ax2.bar(x + width/2, aggressive_trades, width, label='Aggressive', color='lightcoral')
     
-    ax2.set_title('Nombre de Trades', fontsize=14, fontweight='bold')
-    ax2.set_ylabel('Nombre de Trades')
+    ax2.set_title('Number of Trades', fontsize=14, fontweight='bold')
+    ax2.set_ylabel('Number of Trades')
     ax2.set_xticks(x)
     ax2.set_xticklabels(symbols)
     ax2.legend()
     ax2.grid(True, alpha=0.3)
     
-    # Taux de réussite
+    # Win rate
     conservative_winrate = [results[s]['conservative'].get('win_rate', 0) * 100 for s in symbols]
     aggressive_winrate = [results[s]['aggressive'].get('win_rate', 0) * 100 for s in symbols]
     
-    bars5 = ax3.bar(x - width/2, conservative_winrate, width, label='Conservateur', color='lightblue')
-    bars6 = ax3.bar(x + width/2, aggressive_winrate, width, label='Agressif', color='lightcoral')
+    bars5 = ax3.bar(x - width/2, conservative_winrate, width, label='Conservative', color='lightblue')
+    bars6 = ax3.bar(x + width/2, aggressive_winrate, width, label='Aggressive', color='lightcoral')
     
-    ax3.set_title('Taux de Réussite', fontsize=14, fontweight='bold')
-    ax3.set_ylabel('Taux de Réussite (%)')
+    ax3.set_title('Win Rate', fontsize=14, fontweight='bold')
+    ax3.set_ylabel('Win Rate (%)')
     ax3.set_xticks(x)
     ax3.set_xticklabels(symbols)
     ax3.legend()
     ax3.grid(True, alpha=0.3)
     
-    # Résumé
+    # Summary
     ax4.axis('off')
-    summary_text = "RÉSUMÉ GLOBAL\n\n"
+    summary_text = "GLOBAL SUMMARY\n\n"
     for symbol in symbols:
         conservative = results[symbol]['conservative']
         aggressive = results[symbol]['aggressive']
         
         summary_text += f"{symbol}:\n"
-        summary_text += f"  Conservateur: {conservative.get('total_return_pct', 0):.2f}% ({conservative.get('total_trades', 0)} trades)\n"
-        summary_text += f"  Agressif: {aggressive.get('total_return_pct', 0):.2f}% ({aggressive.get('total_trades', 0)} trades)\n\n"
+        summary_text += f"  Conservative: {conservative.get('total_return_pct', 0):.2f}% ({conservative.get('total_trades', 0)} trades)\n"
+        summary_text += f"  Aggressive: {aggressive.get('total_return_pct', 0):.2f}% ({aggressive.get('total_trades', 0)} trades)\n\n"
     
     ax4.text(0.1, 0.9, summary_text, transform=ax4.transAxes, 
              fontsize=12, verticalalignment='top', fontfamily='monospace',
@@ -684,13 +684,13 @@ def create_comparison_chart(results):
     plt.savefig('../images/trading_comparison_final.png', dpi=300, bbox_inches='tight')
     plt.close()
     
-    print("✅ Graphique de comparaison sauvegardé: trading_comparison_final.png")
+    print("✅ Comparison chart saved: trading_comparison_final.png")
 
 def main():
     """
-    Fonction principale
+    Main function
     """
-    print("🚀 DÉMONSTRATION DE TRADING AVEC SIMULATIONS RÉELLES")
+    print("🚀 TRADING DEMONSTRATION WITH REAL SIMULATIONS")
     print("=" * 70)
     
     if len(sys.argv) > 1:
@@ -703,7 +703,7 @@ def main():
         else:
             print("Usage: python demo_trading_final.py [single] [symbol] [conservative|aggressive]")
     else:
-        # Mode par défaut: comparaison complète
+        # Default mode: complete comparison
         run_comparison_simulations()
 
 if __name__ == "__main__":
