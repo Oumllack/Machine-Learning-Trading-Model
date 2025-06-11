@@ -1,5 +1,5 @@
 """
-Script de démonstration avec paramètres agressifs pour générer de vrais trades
+Script de démonstration complet avec simulations de trading réelles
 """
 
 import sys
@@ -66,22 +66,22 @@ def add_technical_indicators(data):
     
     return data
 
-class AggressiveTradingBot:
+class SimpleTradingBot:
     """
-    Bot de trading agressif avec paramètres permissifs
+    Bot de trading simple avec analyse technique
     """
     
-    def __init__(self, symbol, initial_capital=10000, risk_per_trade=0.05, max_position_size=0.3):
+    def __init__(self, symbol, initial_capital=10000, risk_per_trade=0.02, max_position_size=0.1):
         self.symbol = symbol
         self.initial_capital = initial_capital
         self.capital = initial_capital
         self.risk_per_trade = risk_per_trade
         self.max_position_size = max_position_size
         
-        # Paramètres de trading AGRESSIFS
-        self.confidence_threshold = 0.2  # Très permissif
-        self.stop_loss_pct = 0.015  # Stop loss serré
-        self.take_profit_pct = 0.04  # Take profit rapide
+        # Paramètres de trading
+        self.confidence_threshold = 0.6
+        self.stop_loss_pct = 0.05
+        self.take_profit_pct = 0.10
         
         # État du trading
         self.position = 0
@@ -102,75 +102,61 @@ class AggressiveTradingBot:
     
     def get_technical_signals(self):
         """
-        Analyse les signaux techniques avec logique agressive
+        Analyse les signaux techniques
         """
         if self.data is None or len(self.data) < 50:
             return {'signal': 'HOLD', 'confidence': 0}
         
         current = self.data.iloc[-1]
-        previous = self.data.iloc[-2] if len(self.data) > 1 else current
         
         signals = {}
         score = 0
         
-        # RSI - Logique agressive
+        # RSI
         if 'RSI' in current.index:
             rsi = current['RSI']
-            if rsi < 40:  # Plus permissif que 30
+            if rsi < 30:
                 signals['RSI'] = 'BUY'
-                score += 1.5
-            elif rsi > 60:  # Plus permissif que 70
+                score += 1
+            elif rsi > 70:
                 signals['RSI'] = 'SELL'
-                score -= 1.5
+                score -= 1
             else:
                 signals['RSI'] = 'NEUTRAL'
         
-        # MACD - Logique agressive
+        # MACD
         if 'MACD' in current.index and 'MACD_Signal' in current.index:
             macd = current['MACD']
             signal = current['MACD_Signal']
-            macd_prev = previous['MACD'] if 'MACD' in previous.index else macd
-            
-            if macd > signal and macd > macd_prev:  # Croissance du MACD
+            if macd > signal:
                 signals['MACD'] = 'BUY'
-                score += 2
-            elif macd < signal and macd < macd_prev:  # Décroissance du MACD
-                signals['MACD'] = 'SELL'
-                score -= 2
+                score += 1
             else:
-                signals['MACD'] = 'NEUTRAL'
+                signals['MACD'] = 'SELL'
+                score -= 1
         
-        # Moyennes mobiles - Logique agressive
+        # Moyennes mobiles
         if 'SMA_20' in current.index and 'SMA_50' in current.index:
             sma20 = current['SMA_20']
             sma50 = current['SMA_50']
             price = current['Close']
             
-            if price > sma20:  # Plus simple que la logique précédente
+            if price > sma20 > sma50:
                 signals['SMA'] = 'BUY'
                 score += 1
-            elif price < sma20:
+            elif price < sma20 < sma50:
                 signals['SMA'] = 'SELL'
                 score -= 1
             else:
                 signals['SMA'] = 'NEUTRAL'
         
-        # Momentum du prix
-        price_change = (current['Close'] - previous['Close']) / previous['Close']
-        if price_change > 0.01:  # Hausse de plus de 1%
-            signals['MOMENTUM'] = 'BUY'
-            score += 1
-        elif price_change < -0.01:  # Baisse de plus de 1%
-            signals['MOMENTUM'] = 'SELL'
-            score -= 1
-        
         # Déterminer le signal global
-        if score >= 0.5:  # Seuil très bas
+        if score >= 1:
             signal = 'BUY'
-            confidence = min(abs(score) / 4, 1.0)
-        elif score <= -0.5:  # Seuil très bas
+            confidence = min(abs(score) / 3, 1.0)
+        elif score <= -1:
             signal = 'SELL'
-            confidence = min(abs(score) / 4, 1.0)
+            confidence = min(abs(score) / 3, 1.0)
         else:
             signal = 'HOLD'
             confidence = 0
@@ -184,7 +170,7 @@ class AggressiveTradingBot:
     
     def should_buy(self, price):
         """
-        Détermine s'il faut acheter - logique agressive
+        Détermine s'il faut acheter
         """
         signals = self.get_technical_signals()
         
@@ -194,44 +180,28 @@ class AggressiveTradingBot:
             if max_shares > 0:
                 return True, max_shares
         
-        # Logique supplémentaire : acheter si pas de position depuis longtemps
-        if self.position == 0 and len(self.trades) == 0:
-            # Premier trade - être plus agressif
-            max_shares = int((self.capital * 0.1) / price)  # 10% du capital
-            if max_shares > 0:
-                return True, max_shares
-        
         return False, 0
     
     def should_sell(self, price):
         """
-        Détermine s'il faut vendre - logique agressive
+        Détermine s'il faut vendre
         """
         if self.shares == 0:
             return False, 0
         
         signals = self.get_technical_signals()
         
-        # Vendre si signal de vente
+        # Vendre si signal de vente ou stop loss/take profit
         if signals['signal'] == 'SELL' and signals['confidence'] >= self.confidence_threshold:
             return True, self.shares
         
-        # Stop loss serré
+        # Stop loss
         if price <= self.entry_price * (1 - self.stop_loss_pct):
             return True, self.shares
         
-        # Take profit rapide
+        # Take profit
         if price >= self.entry_price * (1 + self.take_profit_pct):
             return True, self.shares
-        
-        # Vendre après un certain temps si pas de profit
-        if len(self.trades) > 0:
-            last_trade = self.trades[-1]
-            if last_trade['type'] == 'BUY':
-                # Vendre après 5 jours si pas de profit significatif
-                days_held = (datetime.now() - last_trade['date']).days
-                if days_held >= 5 and price < self.entry_price * 1.02:  # Pas de profit de 2%
-                    return True, self.shares
         
         return False, 0
     
@@ -350,28 +320,31 @@ class AggressiveTradingBot:
             'final_capital': final_value
         }
 
-def run_aggressive_simulation(symbol='AAPL', days=60, capital=10000):
+def run_trading_simulation(symbol='AAPL', days=60, capital=10000):
     """
-    Exécute une simulation de trading agressive
+    Exécute une simulation de trading réelle
     """
-    print(f"🚀 SIMULATION DE TRADING AGRESSIVE - {symbol}")
+    print(f"🚀 SIMULATION DE TRADING - {symbol}")
     print("=" * 60)
     
-    # Créer le bot agressif
-    bot = AggressiveTradingBot(
+    # Créer le bot
+    bot = SimpleTradingBot(
         symbol=symbol,
         initial_capital=capital,
-        risk_per_trade=0.05,
-        max_position_size=0.3
+        risk_per_trade=0.03,
+        max_position_size=0.2
     )
     
-    print(f"📊 Configuration AGRESSIVE:")
+    # Paramètres plus permissifs pour plus d'activité
+    bot.confidence_threshold = 0.4
+    bot.stop_loss_pct = 0.02
+    bot.take_profit_pct = 0.06
+    
+    print(f"📊 Configuration:")
     print(f"  Capital: {capital:,.2f} €")
     print(f"  Risque par trade: {bot.risk_per_trade*100:.1f}%")
     print(f"  Position max: {bot.max_position_size*100:.1f}%")
     print(f"  Seuil confiance: {bot.confidence_threshold}")
-    print(f"  Stop loss: {bot.stop_loss_pct*100:.1f}%")
-    print(f"  Take profit: {bot.take_profit_pct*100:.1f}%")
     
     # Préparer les données
     print("📈 Récupération des données...")
@@ -452,7 +425,7 @@ def generate_trading_charts(bot, symbol, save_dir='../images'):
             sell_prices = [t['price'] for t in sell_trades]
             plt.scatter(sell_dates, sell_prices, color='red', marker='v', s=100, label='Ventes', zorder=5)
     
-    plt.title(f'Prix et Trades - {symbol} (Agressif)', fontsize=14, fontweight='bold')
+    plt.title(f'Prix et Trades - {symbol}', fontsize=14, fontweight='bold')
     plt.xlabel('Date')
     plt.ylabel('Prix (€)')
     plt.legend()
@@ -477,8 +450,6 @@ def generate_trading_charts(bot, symbol, save_dir='../images'):
         plt.plot(data.index, data['RSI'], label='RSI', linewidth=2, color='orange')
         plt.axhline(y=70, color='red', linestyle='--', alpha=0.7, label='Surachat (70)')
         plt.axhline(y=30, color='green', linestyle='--', alpha=0.7, label='Survente (30)')
-        plt.axhline(y=60, color='orange', linestyle=':', alpha=0.5, label='Seuil agressif (60)')
-        plt.axhline(y=40, color='orange', linestyle=':', alpha=0.5, label='Seuil agressif (40)')
         plt.title(f'RSI - {symbol}', fontsize=14, fontweight='bold')
         plt.xlabel('Date')
         plt.ylabel('RSI')
@@ -518,7 +489,7 @@ def generate_trading_charts(bot, symbol, save_dir='../images'):
     plt.axis('off')
     
     metrics = bot.get_performance_metrics()
-    summary_text = f"RÉSUMÉ DES PERFORMANCES\n{symbol} (AGRESSIF)\n\n"
+    summary_text = f"RÉSUMÉ DES PERFORMANCES\n{symbol}\n\n"
     summary_text += f"Rendement: {metrics.get('total_return_pct', 0):.2f}%\n"
     summary_text += f"Trades: {metrics.get('total_trades', 0)}\n"
     summary_text += f"Taux de réussite: {metrics.get('win_rate', 0):.2%}\n"
@@ -536,26 +507,26 @@ def generate_trading_charts(bot, symbol, save_dir='../images'):
              bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgray", alpha=0.8))
     
     plt.tight_layout()
-    plt.savefig(f'{save_dir}/trading_simulation_{symbol}_aggressive.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'{save_dir}/trading_simulation_{symbol}.png', dpi=300, bbox_inches='tight')
     plt.close()
     
-    print(f"✅ Graphique sauvegardé: trading_simulation_{symbol}_aggressive.png")
+    print(f"✅ Graphique sauvegardé: trading_simulation_{symbol}.png")
 
-def run_multiple_aggressive_simulations():
+def run_multiple_simulations():
     """
-    Lance des simulations agressives sur plusieurs symboles
+    Lance des simulations sur plusieurs symboles
     """
-    print("🔄 SIMULATIONS AGRESSIVES MULTIPLES")
+    print("🔄 SIMULATIONS MULTIPLES")
     print("=" * 60)
     
     symbols = ['AAPL', 'MSFT', 'TSLA']
     results = {}
     
     for symbol in symbols:
-        print(f"\n📈 Simulation agressive pour {symbol}")
+        print(f"\n📈 Simulation pour {symbol}")
         print("-" * 40)
         
-        bot, metrics = run_aggressive_simulation(symbol, 30, 5000)
+        bot, metrics = run_trading_simulation(symbol, 30, 5000)
         
         if bot and metrics:
             results[symbol] = metrics
@@ -584,7 +555,7 @@ def create_comparison_chart(results):
     
     # Rendements
     bars1 = ax1.bar(symbols, returns, color=['lightblue', 'lightgreen', 'lightcoral'])
-    ax1.set_title('Rendements par Symbole (Agressif)', fontsize=14, fontweight='bold')
+    ax1.set_title('Rendements par Symbole', fontsize=14, fontweight='bold')
     ax1.set_ylabel('Rendement (%)')
     ax1.grid(True, alpha=0.3)
     
@@ -596,19 +567,19 @@ def create_comparison_chart(results):
     
     # Nombre de trades
     bars2 = ax2.bar(symbols, trades, color=['lightblue', 'lightgreen', 'lightcoral'])
-    ax2.set_title('Nombre de Trades (Agressif)', fontsize=14, fontweight='bold')
+    ax2.set_title('Nombre de Trades', fontsize=14, fontweight='bold')
     ax2.set_ylabel('Nombre de Trades')
     ax2.grid(True, alpha=0.3)
     
     # Taux de réussite
     bars3 = ax3.bar(symbols, win_rates, color=['lightblue', 'lightgreen', 'lightcoral'])
-    ax3.set_title('Taux de Réussite (Agressif)', fontsize=14, fontweight='bold')
+    ax3.set_title('Taux de Réussite', fontsize=14, fontweight='bold')
     ax3.set_ylabel('Taux de Réussite (%)')
     ax3.grid(True, alpha=0.3)
     
     # Résumé
     ax4.axis('off')
-    summary_text = "RÉSUMÉ GLOBAL (AGRESSIF)\n\n"
+    summary_text = "RÉSUMÉ GLOBAL\n\n"
     for symbol in symbols:
         metrics = results[symbol]
         summary_text += f"{symbol}:\n"
@@ -621,29 +592,29 @@ def create_comparison_chart(results):
              bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgray", alpha=0.8))
     
     plt.tight_layout()
-    plt.savefig('../images/trading_comparison_aggressive.png', dpi=300, bbox_inches='tight')
+    plt.savefig('../images/trading_comparison.png', dpi=300, bbox_inches='tight')
     plt.close()
     
-    print("✅ Graphique de comparaison sauvegardé: trading_comparison_aggressive.png")
+    print("✅ Graphique de comparaison sauvegardé: trading_comparison.png")
 
 def main():
     """
     Fonction principale
     """
-    print("🚀 DÉMONSTRATION DE TRADING AGRESSIF AVEC SIMULATIONS RÉELLES")
+    print("🚀 DÉMONSTRATION DE TRADING AVEC SIMULATIONS RÉELLES")
     print("=" * 70)
     
     if len(sys.argv) > 1:
         if sys.argv[1] == 'single':
             symbol = sys.argv[2] if len(sys.argv) > 2 else 'AAPL'
-            bot, metrics = run_aggressive_simulation(symbol, 60, 10000)
+            bot, metrics = run_trading_simulation(symbol, 60, 10000)
             if bot:
                 generate_trading_charts(bot, symbol)
         else:
-            print("Usage: python demo_trading_aggressive.py [single] [symbol]")
+            print("Usage: python demo_trading_complete.py [single] [symbol]")
     else:
         # Mode par défaut: simulations multiples
-        run_multiple_aggressive_simulations()
+        run_multiple_simulations()
 
 if __name__ == "__main__":
     main() 
